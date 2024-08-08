@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">firestore-app</string>
+    <string name="title_activity_main">firestore-app</string>
+    <string name="package_name">com.firestore.app</string>
+    <string name="custom_url_scheme">com.firestore.app</string>
+</resources>
