@@ -1,24 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { db } from './firabase/firabase';
+
+interface Item {
+  id: string;
+  text: string;
+}
 
 function App() {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [items, setItems] = useState<Item[]>([]);
+
+  const handleAddItem = async () => {
+    if (inputValue.trim() !== "") {
+      await addDoc(collection(db, "items"), { text: inputValue });
+      setInputValue("");
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "items"), (snapshot) => {
+      const itemList: Item[] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Item));
+      setItems(itemList);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input 
+        type="text" 
+        value={inputValue} 
+        onChange={(e) => setInputValue(e.target.value)} 
+      />
+      <button onClick={handleAddItem}>Enviar</button>
+      <ul>
+        {items.map(item => {
+          console.log('item', item);
+          return (
+            <li key={item.id}>{item.text}</li>
+          )
+        })}
+      </ul>
     </div>
   );
 }
