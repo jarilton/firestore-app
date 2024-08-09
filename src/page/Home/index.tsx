@@ -50,11 +50,19 @@ export const Home: React.FC = () => {
   };
 
   const handleDeleteItem = async (id: string) => {
-    try {
-      await deleteDoc(doc(db, "items", id));
-      console.log("Item deletado:", id);
-    } catch (error) {
-      console.error("Erro ao deletar item:", error);
+    const confirmDelete = window.confirm(
+      "Tem certeza de que deseja excluir esta mensagem?"
+    );
+
+    if (confirmDelete) {
+      try {
+        await deleteDoc(doc(db, "items", id));
+        console.log("Item deletado:", id);
+      } catch (error) {
+        console.error("Erro ao deletar item:", error);
+      }
+    } else {
+      console.log("Exclusão cancelada");
     }
   };
 
