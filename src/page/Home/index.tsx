@@ -6,6 +6,8 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../../firabase/firabase";
 import { Input } from "../../components/Input";
@@ -38,7 +40,10 @@ export const Home: React.FC = () => {
   const handleAddItem = async () => {
     if (inputValue.trim() !== "") {
       try {
-        await addDoc(collection(db, "items"), { text: inputValue });
+        await addDoc(collection(db, "items"), {
+          text: inputValue,
+          timestamp: new Date(),
+        });
         toast.success("Mensagem enviada com sucesso!");
         setInputValue("");
       } catch (error) {
@@ -93,8 +98,10 @@ export const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    const q = query(collection(db, "items"), orderBy("timestamp", "desc"));
+
     const unsubscribe = onSnapshot(
-      collection(db, "items"),
+      q,
       (snapshot) => {
         const itemList: Item[] = snapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() } as Item)
