@@ -14,6 +14,7 @@ import Lottie from "react-lottie";
 import * as animationData from "../../assets/lotties/not-found.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 import styles from "./home.module.scss";
 
@@ -38,11 +39,11 @@ export const Home: React.FC = () => {
     if (inputValue.trim() !== "") {
       try {
         await addDoc(collection(db, "items"), { text: inputValue });
-        console.log("Adding item:", inputValue);
+        toast.success("Mensagem enviada com sucesso!");
         setInputValue("");
-        console.log("Input value after setInputValue:", inputValue);
       } catch (error) {
         console.error("Erro ao adicionar item:", error);
+        toast.error("Erro ao enviar mensagem!");
       }
     } else {
       console.log("Campo de input vazio");
@@ -57,9 +58,10 @@ export const Home: React.FC = () => {
     if (confirmDelete) {
       try {
         await deleteDoc(doc(db, "items", id));
-        console.log("Item deletado:", id);
+        toast.success("Mensagem deletada com sucesso!");
       } catch (error) {
         console.error("Erro ao deletar item:", error);
+        toast.error("Erro ao deletar mensagem!");
       }
     } else {
       console.log("Exclusão cancelada");
@@ -67,12 +69,18 @@ export const Home: React.FC = () => {
   };
 
   const handleEditItem = async (id: string) => {
+    if (editValue.trim() === "") {
+      toast.warn("Campo de edição vazio!");
+      return;
+    }
     try {
       await updateDoc(doc(db, "items", id), { text: editValue });
+      toast.success("Mensagem editada com sucesso!");
       setEditingItemId(null);
       setEditValue("");
     } catch (error) {
       console.error("Erro ao editar item:", error);
+      toast.error("Erro ao editar mensagem!");
     }
   };
 
@@ -156,6 +164,7 @@ export const Home: React.FC = () => {
                       <button
                         className={styles.saveButton}
                         onClick={() => handleEditItem(item.id)}
+                        disabled={editValue === item.text}
                       >
                         <FontAwesomeIcon
                           icon={faSave}
@@ -189,14 +198,7 @@ export const Home: React.FC = () => {
               ))
             ) : (
               <div className={styles.boxLottie}>
-                <Lottie
-                  options={LottieOptions}
-                  width="10rem"
-                  height="10rem"
-                  style={{
-                    margin: "none",
-                  }}
-                />
+                <Lottie options={LottieOptions} width="10rem" height="10rem" />
                 <span>Ops! Nenhuma mensagem enviada</span>
               </div>
             )}

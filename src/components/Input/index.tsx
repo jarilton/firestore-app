@@ -16,7 +16,6 @@ export const Input: React.FC<InputProps> = ({
   placeholder = "",
   type = "text",
 }) => {
-  console.log("Input value:", value);
   return (
     <div className={styles.container}>
       <label className={styles.label}>{label}</label>
