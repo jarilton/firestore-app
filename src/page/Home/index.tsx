@@ -12,6 +12,7 @@ import {
 import { db } from "../../firabase/firabase";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { Loading } from "../../components/Loading";
 import Lottie from "react-lottie";
 import * as animationData from "../../assets/lotties/not-found.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +31,7 @@ export const Home: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   const LottieOptions = {
     animationData,
@@ -107,14 +109,24 @@ export const Home: React.FC = () => {
           (doc) => ({ id: doc.id, ...doc.data() } as Item)
         );
         setItems(itemList);
+        setLoading(false);
       },
       (error) => {
         console.error("Erro ao buscar itens:", error);
+        setLoading(false);
       }
     );
 
     return () => unsubscribe();
   }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.containerLoading}>
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
