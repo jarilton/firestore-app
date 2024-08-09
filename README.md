@@ -1,3 +1,13 @@
+# image example project
+![image](https://github.com/user-attachments/assets/921e9538-f008-45eb-990f-1d5e79c15489)
+![image](https://github.com/user-attachments/assets/75aed8a4-af3e-4e84-a2e5-2b0fb08fcded)
+![image](https://github.com/user-attachments/assets/f1374e89-f660-4745-8027-df008e600d16)
+![image](https://github.com/user-attachments/assets/354e0b39-6115-43ca-8411-21f117e1eba9)
+![image](https://github.com/user-attachments/assets/a1afbf4e-96f0-40db-a5fa-6d8212eb1f07)
+
+
+
+
 # install dependecies project
 
 ### `yarn or yarn install`
