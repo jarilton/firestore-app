@@ -4,10 +4,6 @@
 
 .boxOne {
   background-color: #ffffff;
-  height: 32%;
-}
-
-.backgroundTop {
 }
 
 .boxLogo {
@@ -34,7 +30,7 @@
 
 .boxTwo {
   background-color: #f2f2f2;
-  height: -webkit-fill-available;
+  height: 100vh;
 }
 
 .boxContent {
@@ -59,6 +55,55 @@
   border-radius: 10px;
   padding: 1rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editButton,
+.saveButton {
+  background-color: #2c28a7;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.editButton:hover,
+.saveButton:hover {
+  opacity: 0.8;
+}
+
+.deleteButton {
+  width: 30px;
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+.boxLottie {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 4rem;
+}
+
+.textLottie {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f2f2f2;
 }
 
 @media (min-width: 768px) {
